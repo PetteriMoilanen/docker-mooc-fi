@@ -1,7 +1,9 @@
-# Start from the alpine image that is smaller but no fancy tools
 FROM amazoncorretto:8
-COPY spring-example-project/* ./
-RUN chmod +x ./mvnw
-RUN ls -la
-#RUN ./mvnw package
-#ENTRYPOINT ["java -jar ./target/docker-example-1.1.3.jar"]
+# Shortcut because I failed to copy the .mvn folder from the original repo.
+RUN yum install -y maven
+# workdir
+WORKDIR /app
+# uploaded the original project folder to my repo root
+COPY spring-example-project/ .
+RUN mvn package
+ENTRYPOINT ["java", "-jar", "./target/docker-example-1.1.3.jar"]
