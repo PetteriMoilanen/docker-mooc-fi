@@ -24,6 +24,8 @@ Install all packages with `npm install`
 
 First, you need to build the static files with `npm run build`
 
+    Petteri's addition: "run nvm install 16" before the build. Otherwise it will crash because of the default nvm is much newer.
+
 This will generate them into `build` folder.
 
 An example for serving static files:
