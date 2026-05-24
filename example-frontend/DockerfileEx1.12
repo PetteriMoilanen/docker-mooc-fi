@@ -1,0 +1,33 @@
+FROM ubuntu:22.04
+
+# Prevent interactive prompts during installation
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install Node.js 16 and npm (will crash with the newest version)
+RUN apt-get update && apt-get install -y \
+    curl \
+    gnupg \
+    && curl -fsSL https://deb.nodesource.com/setup_16.x | bash - \
+    && apt-get install -y nodejs \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN npm install -g serve
+
+WORKDIR /app
+
+
+# Install project dependencies
+COPY package*.json ./
+RUN npm install
+
+# Copy the rest of the application code (I have a .dockerfile that excludes the local build)
+COPY . .
+
+# Build 
+RUN npm run build
+
+# Expose the port
+EXPOSE 5001
+
+# Serve the built application
+CMD ["serve", "-s", "-l", "5001", "build"]
