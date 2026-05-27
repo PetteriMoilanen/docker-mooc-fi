@@ -1,0 +1,25 @@
+FROM golang:1.16-alpine AS builder
+
+WORKDIR /app
+
+# Disable CGO
+ENV CGO_ENABLED=0
+
+COPY . .
+
+RUN go test ./...
+
+RUN go build -o server .
+
+FROM alpine:3.16
+
+WORKDIR /app
+
+COPY --from=builder /app/server .
+
+ENV PORT=8080
+ENV REQUEST_ORIGIN=https://example.com
+
+EXPOSE 8080
+
+CMD ["./server"]
