@@ -18,7 +18,7 @@ WORKDIR /app
 COPY --from=builder /app/server .
 
 ENV PORT=8080
-ENV REQUEST_ORIGIN=https://example.com
+ENV REQUEST_ORIGIN=https://upgraded-space-acorn-rqj44qgr9w735vpq-5001.app.github.dev/
 
 EXPOSE 8080
 
