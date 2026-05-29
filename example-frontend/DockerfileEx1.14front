@@ -23,11 +23,14 @@ RUN npm install
 # Copy the rest of the application code (I have a .dockerfile that excludes the local build)
 COPY . .
 
+ARG REACT_APP_BACKEND_URL
+ENV REACT_APP_BACKEND_URL=$REACT_APP_BACKEND_URL
+
 # Build 
 RUN npm run build
 
+
 # Expose the port
 EXPOSE 5001
-
 # Serve the built application
-CMD ["serve", "-s", "-l", "5001", "build"]
+CMD ["serve", "-s", "-l", "5001", "build"
