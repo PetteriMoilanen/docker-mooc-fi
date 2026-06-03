@@ -1,0 +1,6 @@
+services:
+  my_app:
+    image: devopsdockeruh/simple-web-service:ubuntu
+    volumes:
+      # This links the host folder to the container folder
+      - ./text.log:/usr/src/app/text.log
