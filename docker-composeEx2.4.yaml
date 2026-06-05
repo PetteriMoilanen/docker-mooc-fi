@@ -1,0 +1,27 @@
+services:
+  front_end:
+    image: ex1.14front
+    ports: 
+      - 5001:5001
+    environment:
+        # Running this in a GitHub codespace
+      - REACT_APP_BACKEND_URL=https://upgraded-space-acorn-rqj44qgr9w735vpq-8080.app.github.dev
+    command: ["serve", "-s", "-l", "5001", "build"]
+    depends_on: 
+      - back_end
+
+  back_end:
+    image: ex1.14back
+    ports: 
+      - 8080:8080
+    
+    environment:
+        # Running this in a GitHub codespace
+      - REQUEST_ORIGIN=https://upgraded-space-acorn-rqj44qgr9w735vpq-5001.app.github.dev
+      - REDIS_HOST=redis
+    command: ["./server"]
+    depends_on: 
+      - redis
+
+  redis:
+    image: redis:7-alpine
